@@ -10,9 +10,11 @@
   padding: 0;
 }
 body {
-  font-family: Arial;
+  font-family: Tahoma;
   background-image: url(./imgs/start-bg.png);
   background-size: cover;
+  transition: .3s all ease-in-out;
+  overflow: hidden;
 }
 ::-webkit-scrollbar {
   width: 5px;
@@ -222,6 +224,32 @@ body {
   color: #0075ff;
   text-align: center;
   margin: 35px 0 10px;
+}
+.result .progress-box {
+  margin: 20px;
+  text-align: center;
+}
+.result .progress-box .level {
+  color: #009688;
+  margin-bottom: 5px;
+}
+.result .progress-box .progress {
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+  height: 20px;
+  border-radius: 10px;
+  background-color: #EEE;
+}
+.result .progress-box .progress span {
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100%;
+  background-color: #009688;
+}
+.result .wrong {
+  display: none;
 }
 .result .wrong-questions {
   border-top: 2px solid #DDD;

@@ -29,7 +29,12 @@ function activeScreen(tab) {
 
 // Handle Start Button
 startBtn.onclick = () => {
-  if (nameInput.value !== "") activeScreen(homeTab);
+  if (nameInput.value !== "") {
+    document.body.style.backgroundImage = "url(./imgs/home-bg.png)";
+    activeScreen(homeTab);
+  } else {
+    alert("Please, Enter The Name");
+  }
 };
 // Handle Enter Button
 nameInput.onkeyup = function (e) {
@@ -51,9 +56,14 @@ languages.forEach((lang) => {
         handleQuestions(data);
         startCounter(data);
         // Handle Submit Button
-        submitBtn.addEventListener("click", () => {
-          if(i < data.length-1) {
-            checkAnswer(data[i].right_answer);
+        submitBtn.addEventListener("click", (e) => {
+          let res = checkAnswer(data[i].right_answer);
+          if(res == undefined) {
+            alert("No Answer is Selected")
+            return false
+          }
+          
+          if(i < data.length - 1) {
             i++;
             handleQuestions(data);
           } else {
@@ -62,7 +72,9 @@ languages.forEach((lang) => {
           }
         });
         activeScreen(questionsTab);
-      }).catch((err) => alert("Something Went Wrong"))
+      }).catch((err) => alert("Something Went Wrong"));
+
+      document.body.style.backgroundImage = "url(./imgs/qs-bg.png)";
   });
 });
 
@@ -110,8 +122,14 @@ function checkAnswer(rAnswer) {
 
   if (rAnswer == theChoosenAnswer) 
     rightAnswers++;
-  else 
+  else {
     wrongAnswers.push(rAnswer);
+    wrongQuestions.style.display = "block";
+  }
+    
+
+  return theChoosenAnswer;
+
 }
 
 // Show Details And Wrong Questions Answer
@@ -119,6 +137,18 @@ function handleResult(arr) {
   username.innerHTML = `Name: ${nameInput.value}`;
   score.innerHTML = `Score: ${rightAnswers}`;
   let idx = 0;
+  let level = document.querySelector(".progress-box .level");
+
+  document.querySelector(".result .progress span").style.width = `${(rightAnswers / arr.length) * 100}%`;
+
+  if(rightAnswers >= 0 && rightAnswers < arr.length/4)
+    level.innerHTML = "Bad";
+  else if(rightAnswers >= arr.length/4 && rightAnswers <= arr.length/2)
+    level.innerHTML = "Not Bad";
+  else if(rightAnswers > arr.length/2 < arr.length/4 && rightAnswers <= arr.length)
+    level.innerHTML = "Good";
+
+
 
   wrongAnswers.forEach((answer) => {
     arr.map((el) => {
