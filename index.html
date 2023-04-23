@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Quiz App</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="container">
+    <div class="start">
+      <h1>Quiz Challenge</h1>
+      <p>Questions For Programmers</p>
+      <input type="text" placeholder="Enter Your Name" spellcheck="false" autocomplete="off" autofocus>
+      <button>Start</button>
+    </div>
+    <div class="home">
+      <h1 class="title">Let's Go</h1>
+      <div class="langs">
+        <div class="lang" lang="py">
+          <div class="text">
+            <h1>Python</h1>
+            <h3>Level: Easy</h3>
+          </div>
+          <img src="icons/py.png" alt="">
+        </div>
+        <div class="lang" lang="js">
+          <div class="text">
+            <h1>JavaScript</h1>
+            <h3>Level: Medium</h3>
+          </div>
+          <img src="icons/js.png" alt="">
+        </div>
+        <div class="lang" lang="c++">
+          <div class="text">
+            <h1>C++</h1>
+            <h3>Level: Hard</h3>
+          </div>
+          <img src="icons/c++.png" alt="">
+        </div>
+      </div>
+    </div>
+    <div class="questions">
+      <div class="time">
+        <h1 class="counter">03:00</h1>
+        <img src="icons/clock.png" alt="">
+      </div>
+      <div class="form">
+        <div class="questions-nums">Question <span class="num">1</span> of <span class="total">10</span></div>
+        <h1 class="question">How to Print a Message For User? </h1>
+        <div class="answers">
+        </div>
+        <button class="submit">Submit</button>
+      </div>
+    </div>
+    <div class="result">
+      <div class="info">
+        <h2 class="name"></h2>
+        <h2 class="score"></h2>
+      </div>
+      <div class="wrong">
+      </div>
+      <button class="restart">Try Again</button>
+      <br>
+    </div>
+  </div>
+  <script src="main.js"></script>
+</body>
+</html>
