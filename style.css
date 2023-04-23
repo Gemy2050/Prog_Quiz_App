@@ -245,4 +245,13 @@ body {
   margin: 20px 0;
 }
 
-
+@media (max-width: 475px) {
+  .container {
+    margin: auto;
+    height: 100vh;
+    width: 100%;
+  }
+  .container .questions {
+    height: 100vh;
+  }
+}
