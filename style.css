@@ -218,6 +218,11 @@ body {
   max-width: 100%;
   gap: 50px;
 }
+.result .wrong-title {
+  color: #0075ff;
+  text-align: center;
+  margin: 35px 0 10px;
+}
 .result .wrong-questions {
   border-top: 2px solid #DDD;
   border-color: #DDD transparent;
