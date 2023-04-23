@@ -17,7 +17,7 @@ let wrongQuestions = document.querySelector(".result .wrong");
 let i = 0;
 let rightAnswers = 0;
 let wrongAnswers = [];
-let countDown = 30;
+let countDown = 180;
 
 // Function To Show Current Tab
 function activeScreen(tab) {
@@ -108,14 +108,10 @@ function checkAnswer(rAnswer) {
     }
   }
 
-  console.log(theChoosenAnswer, rAnswer);
-  if (rAnswer == theChoosenAnswer) {
+  if (rAnswer == theChoosenAnswer) 
     rightAnswers++;
-    console.log(true);
-  } else {
+  else 
     wrongAnswers.push(rAnswer);
-    console.log(false);
-  }
 }
 
 // Show Details And Wrong Questions Answer
