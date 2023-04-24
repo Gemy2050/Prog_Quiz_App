@@ -48,6 +48,30 @@ document.querySelector(".result .restart").onclick = () => {
   location.reload()
 }
 
+function onSubmit(data) {
+  // Handle Submit Button
+  submitBtn.addEventListener("click", (e) => {
+    // Call Check Answer Function on Submit
+    let res = checkAnswer(data[i].right_answer);
+
+    // Stop Submiting if No Answer is Selected
+    if(res == undefined) {
+      alert("No Answer is Selected")
+      return false
+    }
+    
+    // Condition To Increament Index To Get Next Question
+    if(i < data.length - 1) {
+      i++;
+      handleQuestions(data);
+    } else {
+      // Get Result And Show Result Tab
+      handleResult(data);
+      activeScreen(resultTab);
+    }
+  });
+}
+
 // Get The Selected Language Questions
 languages.forEach((lang) => {
   lang.addEventListener("click", (e) => {
@@ -58,27 +82,11 @@ languages.forEach((lang) => {
         // Call Get Questions And Start Count Functions
         handleQuestions(data);
         startCounter(data);
-        // Handle Submit Button
-        submitBtn.addEventListener("click", (e) => {
-          // Call Check Answer Function on Submit
-          let res = checkAnswer(data[i].right_answer);
 
-          // Stop Submiting if No Answer is Selected
-          if(res == undefined) {
-            alert("No Answer is Selected")
-            return false
-          }
-          
-          // Condition To Increament Index To Get Next Question
-          if(i < data.length - 1) {
-            i++;
-            handleQuestions(data);
-          } else {
-            // Get Result And Show Result Tab
-            handleResult(data);
-            activeScreen(resultTab);
-          }
-        });
+        // Call Submit Function
+        onSubmit(data);
+
+        // Show Question Tab
         activeScreen(questionsTab);
       }).catch((err) => alert("Something Went Wrong"));
 
@@ -133,11 +141,11 @@ function checkAnswer(rAnswer) {
       theChoosenAnswer = answers[i].dataset.answer;
     }
   }
-
+  
   if (rAnswer == theChoosenAnswer) 
-    rightAnswers++;
+  rightAnswers++;
   else {
-    wrongAnswers.push(rAnswer);
+    wrongAnswers.push(question.innerHTML);
     wrongQuestions.style.display = "block";
   }
 
@@ -150,29 +158,29 @@ function handleResult(arr) {
   // Show Name And Score
   username.innerHTML = `Name: ${nameInput.value}`;
   score.innerHTML = `Score: ${rightAnswers}`;
-  let idx = 0;
-  let level = document.querySelector(".progress-box .level");
-
+  
   document.querySelector(".result .progress span").style.width = `${(rightAnswers / arr.length) * 100}%`;
-
+  
+  let level = document.querySelector(".progress-box .level");
   // Get The Level
   if(rightAnswers >= 0 && rightAnswers < arr.length/4)
-    level.innerHTML = "Bad";
+  level.innerHTML = "Bad";
   else if(rightAnswers >= arr.length/4 && rightAnswers <= arr.length/2)
-    level.innerHTML = "Not Bad";
+  level.innerHTML = "Not Bad";
   else if(rightAnswers > arr.length/2 < arr.length/4 && rightAnswers <= arr.length)
-    level.innerHTML = "Good";
-
-
+  level.innerHTML = "Good";
+  
+  
+  let idx = 0;
   // Add The Wrong Questions To The Page
-  wrongAnswers.forEach((answer) => {
+  wrongAnswers.forEach((question) => {
     arr.map((el) => {
-      if(el.right_answer == answer) {
+      if(el.title == question) {
         idx++;
         wrongQuestions.innerHTML += `
           <div class="wrong-questions">
-            <h1 class="question">${idx}- ${el.title}</h1>
-            <h3 class="answer">${answer}</h3>
+            <h1 class="question">${idx}- ${question}</h1>
+            <h3 class="answer">${el.right_answer}</h3>
           </div>
         `
       }

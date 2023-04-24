@@ -89,10 +89,10 @@
      },
      {
           "title" : "What will be the output of all([2,4,0,6]) ?",
-          "answer_1" : "false",
-          "answer_2" : "true",
+          "answer_1" : "False",
+          "answer_2" : "True",
           "answer_3" : "0",
           "answer_4" : "Invalid code",
-          "right_answer" : "false"
+          "right_answer" : "False"
      }
 ]
