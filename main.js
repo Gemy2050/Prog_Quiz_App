@@ -1,3 +1,4 @@
+// Selectors
 let homeTab = document.querySelector(".home");
 let questionsTab = document.querySelector(".questions");
 let resultTab = document.querySelector(".result");
@@ -47,26 +48,33 @@ document.querySelector(".result .restart").onclick = () => {
   location.reload()
 }
 
-// Get The Selected Language
+// Get The Selected Language Questions
 languages.forEach((lang) => {
   lang.addEventListener("click", (e) => {
+    // Fetch Questions of Choosed Language 
     fetch(`./json/${lang.getAttribute("lang")}.json`)
       .then((res) => res.json())
       .then((data) => {
+        // Call Get Questions And Start Count Functions
         handleQuestions(data);
         startCounter(data);
         // Handle Submit Button
         submitBtn.addEventListener("click", (e) => {
+          // Call Check Answer Function on Submit
           let res = checkAnswer(data[i].right_answer);
+
+          // Stop Submiting if No Answer is Selected
           if(res == undefined) {
             alert("No Answer is Selected")
             return false
           }
           
+          // Condition To Increament Index To Get Next Question
           if(i < data.length - 1) {
             i++;
             handleQuestions(data);
           } else {
+            // Get Result And Show Result Tab
             handleResult(data);
             activeScreen(resultTab);
           }
@@ -80,32 +88,38 @@ languages.forEach((lang) => {
 
 // Get Questions And Answers
 function handleQuestions(arr) {
+  // Get The Question, Answers and Add The To Page
   currQuestion.innerHTML = i + 1;
   totalQuestions.innerHTML = arr.length;
   question.innerHTML = arr[i].title;
   answers.innerHTML = "";
   for (let j = 1; j <= 4; j++) {
     answers.innerHTML += `
-      <div class="answer">
+      <label class="answer" for="answer${j}">
         <input type="radio" name="answer" data-answer='${arr[i][`answer_${j}`]}' id="answer${j}">
         <label for="answer${j}">${arr[i][`answer_${j}`]}</label>
-      </div>
+      </label>
     `;
   }
 }
 
 // Handle Time Counter
 function startCounter(arr) {
+  // Interval To Reduce Time Every 1 Second
   let id = setInterval(() => {
     countDown -= 1;
     let m = Math.floor(countDown / 60) ;
     let s = Math.floor((countDown % 60));
-    counter.innerHTML = `${m < 10 ? `0`+m : m}:${s < 10 ? '0'+s : s}`
+    counter.innerHTML = `${m < 10 ? `0`+m : m}:${s < 10 ? '0'+s : s}`;
     if(countDown == 0) {
       handleResult(arr);
       activeScreen(resultTab);
       clearInterval(id);
+      document.querySelector("#clock").pause();
     }
+    else if(countDown == 30)
+      document.querySelector("#clock").play();
+
   }, 1000);
 }
 
@@ -126,7 +140,6 @@ function checkAnswer(rAnswer) {
     wrongAnswers.push(rAnswer);
     wrongQuestions.style.display = "block";
   }
-    
 
   return theChoosenAnswer;
 
@@ -134,6 +147,7 @@ function checkAnswer(rAnswer) {
 
 // Show Details And Wrong Questions Answer
 function handleResult(arr) {
+  // Show Name And Score
   username.innerHTML = `Name: ${nameInput.value}`;
   score.innerHTML = `Score: ${rightAnswers}`;
   let idx = 0;
@@ -141,6 +155,7 @@ function handleResult(arr) {
 
   document.querySelector(".result .progress span").style.width = `${(rightAnswers / arr.length) * 100}%`;
 
+  // Get The Level
   if(rightAnswers >= 0 && rightAnswers < arr.length/4)
     level.innerHTML = "Bad";
   else if(rightAnswers >= arr.length/4 && rightAnswers <= arr.length/2)
@@ -149,7 +164,7 @@ function handleResult(arr) {
     level.innerHTML = "Good";
 
 
-
+  // Add The Wrong Questions To The Page
   wrongAnswers.forEach((answer) => {
     arr.map((el) => {
       if(el.right_answer == answer) {
