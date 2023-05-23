@@ -55,8 +55,7 @@ function onSubmit(data) {
     let res = checkAnswer(data[i].right_answer);
 
     // Stop Submiting if No Answer is Selected
-    if(res == undefined) {
-      alert("No Answer is Selected")
+    if(res == false) {
       return false
     }
     
@@ -123,7 +122,6 @@ function startCounter(arr) {
       handleResult(arr);
       activeScreen(resultTab);
       clearInterval(id);
-      document.querySelector("#clock").pause();
     }
     else if(countDown == 30)
       document.querySelector("#clock").play();
@@ -141,6 +139,11 @@ function checkAnswer(rAnswer) {
       theChoosenAnswer = answers[i].dataset.answer;
     }
   }
+
+  if(theChoosenAnswer == undefined) {
+    alert("No Answer Selected");
+    return false;
+  }
   
   if (rAnswer == theChoosenAnswer) 
   rightAnswers++;
@@ -149,12 +152,14 @@ function checkAnswer(rAnswer) {
     wrongQuestions.style.display = "block";
   }
 
-  return theChoosenAnswer;
-
 }
 
 // Show Details And Wrong Questions Answer
 function handleResult(arr) {
+
+  // Stop Clock
+  document.querySelector("#clock").pause();
+
   // Show Name And Score
   username.innerHTML = `Name: ${nameInput.value}`;
   score.innerHTML = `Score: ${rightAnswers}`;
